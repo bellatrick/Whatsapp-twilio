@@ -20,6 +20,7 @@ const { Translate } = require("@google-cloud/translate").v2;
 // Create an instance of Translate with your project ID
 const translate = new Translate({
   projectId: "twitter-e364c",
+  key: process.env.GOOGLE_API_KEY
 });
 
 // Define a route for handling WhatsApp messages
