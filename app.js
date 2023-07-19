@@ -32,9 +32,9 @@ app.post("/", express.urlencoded(), (req, res) => {
   // define twilio's number
   const twilioNumber = req.body.To;
   // Split the text by space
-  const parts = text.split(" ");
+  const parts = text.split(":");
   // get the reciever's number by splitting by the string "whatsapp:+"
-  const to = parts[0].startsWith("whatsapp:+")
+  const to = text.startsWith("whatsapp:+")
     ? parts.shift()
     : getReceiver(from);
 
