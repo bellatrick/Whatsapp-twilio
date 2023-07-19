@@ -35,7 +35,7 @@ app.post("/", express.urlencoded(), (req, res) => {
   const parts = text.split(":");
   // get the reciever's number by splitting by the string "whatsapp:+"
   const to = text.startsWith("whatsapp:+")
-    ? parts.shift()
+    ? parts[1]
     : getReceiver(from);
 
   try {
