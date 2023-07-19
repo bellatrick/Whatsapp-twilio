@@ -20,7 +20,7 @@ const { Translate } = require("@google-cloud/translate").v2;
 // Create an instance of Translate with your project ID
 const translate = new Translate({
   projectId: "twitter-e364c",
-  key: process.env.GOOGLE_API_KEY
+  key: process.env.GOOGLE_API_KEY,
 });
 
 // Define a route for handling WhatsApp messages
@@ -70,6 +70,19 @@ app.post("/", express.urlencoded(), (req, res) => {
         "Welcome to LinguaLink. Please provide a valid receiver's number in the format whatsapp:+146786543. To change your default language type /lang <language code>. For example /lang fr will set your preferred language to French. Please ensure that your language is in the ISO 639-1 format or your message will not be delivered. You can search for your language format here https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes"
       );
       return;
+    }
+    if (text.startsWith("whatsapp:+")) {
+      sendMessage(
+        twilioNumber,
+        from,
+        "You have successfully saved a new number for messaging"
+      );
+      sendMessage(
+        twilioNumber,
+        to,
+        `The contact ${from} has saved your number for messaging`
+      );
+      return;
     } else {
       // Get the message from either the rest of the parts or from the whole text
       const message = parts.length > 0 ? parts.join(" ") : text;
@@ -115,5 +128,3 @@ app.use((err, req, res, next) => {
   // response to user with error status and details
   res.status(err.status || 500).send(err.message || "Something went wrong");
 });
-
-
